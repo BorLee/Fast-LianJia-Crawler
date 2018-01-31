@@ -44,14 +44,15 @@ def update_city(city_id):
                 BizCircle.id == int(biz_circle_info['bizcircle_id'])
             ).first()
 
+            # logging.info(biz_circle)
+
             if biz_circle:
                 # 记录已存在，可能需要更新 district_id
                 if district.id not in biz_circle.district_id:
+
                     # biz_circle.district_id.append()、district_id += 等方式都不能更新表
-                    #biz_circle.district_id = biz_circle.district_id + [district.id]
-                    templlll = list(biz_circle.district_id)
-                    templlll.append(district.id)
-                    biz_circle.district_id = tuple(templlll)
+                    temp = biz_circle.district_id + tuple([district.id])
+                    biz_circle.district_id = temp
             else:
                 biz_circle = BizCircle(city.id, district.id, biz_circle_info)
                 db_session.add(biz_circle)
